@@ -1,0 +1,84 @@
+## ~/.nanorc
+## Traditional (CUA-style) shortcuts + Rosé Pine colours
+## Requires nano 5.0+ (string/macro bindings and the colour options below).
+
+###############################################################################
+## Behaviour
+###############################################################################
+set multibuffer          # ^O opens files in a new buffer instead of inserting
+set zap                  # typing/Backspace/Delete replaces or deletes the selection
+set mouse                # click to move, drag to select, scroll wheel
+set linenumbers
+set autoindent
+set tabsize 4
+set tabstospaces         # comment out if you want real tabs
+#set smooth
+set softwrap
+set atblanks             # wrap at whitespace rather than mid-word
+set historylog
+set positionlog          # reopen files where you left off
+set stateflags           # show AUTOINDENT/MARK/etc. in the title bar
+
+###############################################################################
+## Keyboard shortcuts
+###############################################################################
+
+## --- Clipboard ---------------------------------------------------------------
+## With no selection, copy/cut act on the whole line (like VS Code).
+bind ^C copy    main     # Copy
+bind ^X cut     main     # Cut
+bind ^V paste   main     # Paste
+
+## --- Selection ---------------------------------------------------------------
+## Shift+Arrows / Shift+Home / Shift+End select text out of the box.
+bind ^A "{firstline}{home}{mark}{lastline}{end}" main   # Select all
+
+## --- Undo / Redo -------------------------------------------------------------
+bind ^Z undo    main
+bind ^Y redo    main
+
+## --- Files -------------------------------------------------------------------
+bind ^S savefile main    # Save
+bind F12 writeout main   # Save As (Ctrl+Shift+S can't be sent to a terminal)
+bind ^O insert  main     # Open file (new buffer, thanks to 'set multibuffer')
+bind ^Q exit    main     # Close buffer / quit
+
+## --- Search ------------------------------------------------------------------
+bind ^F whereis      main   # Find
+bind F3 findnext     main   # Find next
+bind F4 findprevious main   # Find previous
+bind ^R replace      main   # Find & replace
+bind ^G gotoline     main   # Go to line
+
+## --- Editing -----------------------------------------------------------------
+bind ^_ comment main     # Ctrl+/ toggles comment on the line/selection
+
+## Already works by default in nano 5+, no binding needed:
+##   Ctrl+Left / Ctrl+Right   word jump
+##   Ctrl+Home / Ctrl+End     start / end of file
+##   Ctrl+Backspace / Delete  delete word
+##   Shift+Arrows             extend selection
+
+###############################################################################
+## Rosé Pine colours
+##
+## These use the 16 ANSI colour names, so they pick up whatever your terminal's
+## Rosé Pine palette defines. Typical mapping:
+##   black=overlay   red=love   green=pine   yellow=gold
+##   blue=foam       magenta=iris   cyan=rose   white=text
+##   brightblack=muted
+###############################################################################
+set titlecolor     bold,black,magenta       # top bar        (iris)
+set statuscolor    bold,black,yellow        # status messages (gold)
+set errorcolor     bold,white,red           # errors          (love)
+set selectedcolor  white,brightblack        # selected text   (muted)
+set spotlightcolor black,yellow             # search matches  (gold)
+set numbercolor    brightblack              # line numbers    (muted)
+set keycolor       bold,magenta             # shortcut keys in footer (iris)
+set functioncolor  cyan                     # shortcut labels in footer (rose)
+
+###############################################################################
+## Syntax highlighting (uses the same ANSI colours, so it follows the theme)
+###############################################################################
+include "/usr/share/nano/*.nanorc"
+include "/usr/share/nano/extra/*.nanorc"

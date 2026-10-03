@@ -1,0 +1,272 @@
+<labwc_config>
+  <core>
+    <gap>28</gap>
+    <autoEnableOutputs>no</autoEnableOutputs>
+    <decoration>server</decoration>
+  </core>
+
+  <windowSwitcher preview="yes" outlines="yes">
+    <osd show="no" />
+  </windowSwitcher>
+
+  <desktops number="6">
+    <popupTime>0</popupTime>
+  </desktops>
+
+  <regions>
+    <region name="full" x="0%" y="0%" width="100%" height="100%"/>
+  </regions>
+
+  <keyboard>
+    <default />
+
+    <numlock>on</numlock>
+
+    <keybind key="XF86AudioPlay">
+      <action name="Execute" command="playerctl play-pause" />
+    </keybind>
+
+    <keybind key="Print">
+      <action name="Execute" command="sh -c 'grim -g &quot;$(slurp)&quot; - | wl-copy'" />
+    </keybind>
+
+    <keybind key="W-Up">
+      <action name="ToggleSnapToRegion" region="full"/>
+    </keybind>
+
+    <keybind key="W-Down">
+      <action name="UnMaximize" />
+      <action name="AutoPlace" policy="center" />
+    </keybind>
+
+    <keybind key="W-Return">
+      <action name="Execute" command="foot" />
+    </keybind>
+
+    <keybind key="W-r">
+      <action name="Execute" command="wmenu-run -b -N 191724 -n e0def4 -M 191724 -m c4a7e7 -S 26233a -s eb6f92" />
+    </keybind>
+
+    <keybind key="W-space">
+      <action name="ShowMenu" menu="root-menu" />
+    </keybind>
+
+    <keybind key="C-W-space">
+      <action name="ToggleAlwaysOnTop" />
+    </keybind>
+
+    <keybind key="W-S-q">
+      <action name="Close" />
+    </keybind>
+
+    <keybind key="W-1"><action name="GoToDesktop" to="1" /></keybind>
+    <keybind key="W-2"><action name="GoToDesktop" to="2" /></keybind>
+    <keybind key="W-3"><action name="GoToDesktop" to="3" /></keybind>
+    <keybind key="W-4"><action name="GoToDesktop" to="4" /></keybind>
+    <keybind key="W-5"><action name="GoToDesktop" to="5" /></keybind>
+    <keybind key="W-6"><action name="GoToDesktop" to="6" /></keybind>
+
+    <keybind key="W-S-1"><action name="SendToDesktop" to="1" /></keybind>
+    <keybind key="W-S-2"><action name="SendToDesktop" to="2" /></keybind>
+    <keybind key="W-S-3"><action name="SendToDesktop" to="3" /></keybind>
+    <keybind key="W-S-4"><action name="SendToDesktop" to="4" /></keybind>
+    <keybind key="W-S-5"><action name="SendToDesktop" to="5" /></keybind>
+    <keybind key="W-S-6"><action name="SendToDesktop" to="6" /></keybind>
+
+    <keybind key="C-W-Left">
+      <action name="GoToDesktop" to="left" wrap="yes" />
+    </keybind>
+    <keybind key="C-W-Right">
+      <action name="GoToDesktop" to="right" wrap="yes" />
+    </keybind>
+
+    <keybind key="C-A-Left">
+      <action name="SendToDesktop" to="left" follow="yes" wrap="yes" />
+    </keybind>
+    <keybind key="C-A-Right">
+      <action name="SendToDesktop" to="right" follow="yes" wrap="yes" />
+    </keybind>
+
+    <keybind key="C-W-Up">
+      <action name="MoveToOutput" direction="up" />
+      <action name="WarpCursor" to="window" x="50%" y="50%" />
+    </keybind>
+    <keybind key="C-W-Down">
+      <action name="MoveToOutput" direction="down" />
+      <action name="WarpCursor" to="window" x="50%" y="50%" />
+    </keybind>
+
+    <!-- Windows + Shift + C -> Reload Config -->
+    <keybind key="W-S-c">
+      <action name="Reconfigure" />
+    </keybind>
+
+    <!-- Windows + S -> show / hide Steam -->
+    <keybind key="W-s">
+      <action name="ForEach">
+        <!-- Visible on this desktop? -> hide it -->
+        <query identifier="steam" desktop="current" iconified="no" />
+        <then><action name="Iconify" /></then>
+        <none>
+          <!-- Otherwise bring any existing window here, or launch -->
+          <action name="ForEach">
+            <query identifier="steam" />
+            <then>
+              <action name="SendToDesktop" to="current" follow="no" />
+              <action name="Focus" />
+              <action name="Raise" />
+            </then>
+            <none>
+              <action name="Execute" command="steam steam://open/main" />
+            </none>
+          </action>
+        </none>
+      </action>
+    </keybind>
+
+    <!-- Windows + D -> show / hide Discord -->
+    <keybind key="W-d">
+      <action name="ForEach">
+        <!-- Visible on this desktop? -> hide it -->
+        <query identifier="discord" desktop="current" iconified="no" />
+        <then><action name="Iconify" /></then>
+        <none>
+          <!-- Otherwise bring any existing window here, or launch -->
+          <action name="ForEach">
+            <query identifier="discord" />
+            <then>
+              <action name="SendToDesktop" to="current" follow="no" />
+              <action name="Focus" />
+              <action name="Raise" />
+            </then>
+            <none>
+              <action name="Execute" command="discord" />
+            </none>
+          </action>
+        </none>
+      </action>
+    </keybind>
+
+    <!-- Windows + N -> show / hide LibreOffice Calc -->
+    <keybind key="W-n">
+      <action name="ForEach">
+        <!-- Visible on this desktop? -> hide it -->
+        <query identifier="libreoffice-calc" desktop="current" iconified="no" />
+        <then><action name="Iconify" /></then>
+        <none>
+          <!-- Otherwise bring any existing window here, or launch -->
+          <action name="ForEach">
+            <query identifier="libreoffice-calc" />
+            <then>
+              <action name="SendToDesktop" to="current" follow="no" />
+              <action name="Focus" />
+              <action name="Raise" />
+            </then>
+            <none>
+              <action name="Execute" command="libreoffice --calc" />
+            </none>
+          </action>
+        </none>
+      </action>
+    </keybind>
+
+    <!-- Windows + W -> open Firefox -->
+    <keybind key="W-w">
+      <action name="Execute" command="firefox" />
+    </keybind>
+
+    <!-- Alt-Tab window cycling -->
+    <keybind key="A-Tab">
+      <action name="NextWindow" />
+    </keybind>
+    <keybind key="S-A-Tab">
+      <action name="PreviousWindow" />
+    </keybind>
+  </keyboard>
+
+  <mouse>
+    <default />
+
+    <!-- empty bindings override the default desktop scroll -> switch desktop -->
+    <context name="Root">
+      <mousebind direction="Up" action="Scroll" />
+      <mousebind direction="Down" action="Scroll" />
+    </context>
+  </mouse>
+
+  <theme>
+    <!-- Keeps the border system active -->
+    <keepBorder>yes</keepBorder>
+    <maximizedDecoration>none</maximizedDecoration>
+  </theme>
+
+  <windowRules>
+    <!-- Target all windows, strip the heading, but preserve the border layout -->
+    <windowRule identifier="*">
+      <action name="SetDecorations" decorations="border" />
+    </windowRule>
+
+    <windowRule identifier="work-arrange">
+      <!-- Calc -> desktop 1, DP-2 -->
+      <action name="ForEach">
+        <query identifier="libreoffice-calc" />
+        <then>
+          <action name="SendToDesktop" to="1" follow="no" />
+          <action name="MoveToOutput" output="DP-2" />
+        </then>
+      </action>
+      <!-- Teams -> desktop 2, DP-2 -->
+      <action name="ForEach">
+        <query identifier="chrome-ompifgpmddkgmclendfeacglnodjjndh-*" />
+        <then>
+          <action name="SendToDesktop" to="2" follow="no" />
+          <action name="MoveToOutput" output="DP-2" />
+        </then>
+      </action>
+      <!-- Webex -> desktop 2, HDMI-A-1 -->
+      <action name="ForEach">
+        <query identifier="chrome-lkahaieplkadlbenndabamkfdenihfbh-*" />
+        <then>
+          <action name="SendToDesktop" to="2" follow="no" />
+          <action name="MoveToOutput" output="HDMI-A-1" />
+        </then>
+      </action>
+      <!-- Outlook -> desktop 5, HDMI-A-1 -->
+      <action name="ForEach">
+        <query identifier="chrome-faolnafnngnfdaknnbpnkhgohbobgegn-*" />
+        <then>
+          <action name="SendToDesktop" to="5" follow="no" />
+          <action name="MoveToOutput" output="HDMI-A-1" />
+        </then>
+      </action>
+      <!-- Desktop 6 app -> HDMI-A-1 -->
+      <action name="ForEach">
+        <query identifier="chrome-hjckjhgaddkfkplbkngnjipjookbmiad-*" />
+        <then>
+          <action name="SendToDesktop" to="6" follow="no" />
+          <action name="MoveToOutput" output="HDMI-A-1" />
+        </then>
+      </action>
+    </windowRule>
+
+    <windowRule identifier="work-arrange-firefox">
+      <!-- ServiceNow (Firefox) -> desktop 3, HDMI-A-1 -->
+      <action name="ForEach">
+        <query identifier="firefox" title="*subway*" />
+        <query identifier="firefox" title="*servicenow*" />
+        <then>
+          <action name="SendToDesktop" to="3" follow="no" />
+          <action name="MoveToOutput" output="HDMI-A-1" />
+        </then>
+      </action>
+      <!-- Canopy (Firefox) -> desktop 4, HDMI-A-1 -->
+      <action name="ForEach">
+        <query identifier="firefox" title="*canopy*" />
+        <then>
+          <action name="SendToDesktop" to="4" follow="no" />
+          <action name="MoveToOutput" output="HDMI-A-1" />
+        </then>
+      </action>
+    </windowRule>
+  </windowRules>
+</labwc_config>

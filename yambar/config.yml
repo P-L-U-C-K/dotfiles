@@ -1,0 +1,138 @@
+# Yambar config - Rose Pine (main) / Ubuntu Nerd Font
+# Place at ~/.config/yambar/config.yml
+#
+# base 191724 | text e0def4 | muted 6e6a86 | subtle 908caa | love eb6f92
+# gold f6c177 | rose ebbcba | pine 31748f | foam 9ccfd8 | iris c4a7e7
+
+bar:
+  monitor: DP-2
+  height: 30
+  location: top
+  font: Ubuntu Nerd Font:pixelsize=14
+  background: 191724f6
+  foreground: e0def4ff
+  margin: 12
+  spacing: 16
+
+  # ---------------- LEFT: current workspace name (i3 / sway) ----------------
+  left:
+    - script:
+        path: /usr/bin/labwc-workspace
+        args: []
+        content:
+          string:
+            text: "{workspace}"
+            foreground: c4a7e7ff
+
+  # ---------------- CENTER: day, date, time - no icons ----------------
+  center:
+    - clock:
+        time-format: "%I:%M %p"
+        date-format: "%A, %d %B %Y"
+        content:
+          - string:
+              text: "{date}  {time}"
+
+  # ---------------- RIGHT (yambar has no systray module) ----------------
+  right:
+    # Volume - uses pactl (pipewire-pulse), same as your swaybar script
+    - script:
+        path: /bin/sh
+        args:
+          - -c
+          - |
+            while :; do
+              if command -v wpctl >/dev/null 2>&1 && out=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null); then
+                n=$(echo "$out" | awk '{printf "%d", $2*100+0.5}')
+                vol="${n}%"
+                case "$out" in
+                  *MUTED*) state=muted ;;
+                  *) if [ "$n" -ge 50 ]; then state=high; else state=low; fi ;;
+                esac
+              else
+                vol=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | grep -o '[0-9]*%' | head -n1)
+                if [ -z "$vol" ]; then state=na
+                elif pactl get-sink-mute @DEFAULT_SINK@ 2>/dev/null | grep -q yes; then state=muted
+                elif [ "${vol%\%}" -ge 50 ]; then state=high
+                else state=low; fi
+              fi
+              echo "state|string|$state"
+              echo "vol|string|${vol:-0%}"
+              echo
+              sleep 1
+            done
+        content:
+          map:
+            default: {empty: {}}
+            conditions:
+              state == high:
+                string: {text: " {vol}", foreground: f6c177ff}
+              state == low:
+                string: {text: " {vol}", foreground: f6c177ff}
+              state == muted:
+                string: {text: " muted", foreground: 6e6a86ff}
+              state == na:
+                string: {text: " n/a", foreground: 6e6a86ff}
+
+    # Network (Ethernet)
+    - network:
+        content:
+          map:
+            default: {empty: {}}
+            conditions:
+              name == eth0:
+                map:
+                  default:
+                    string: {text: " disconnected", foreground: eb6f92ff}
+                  conditions:
+                    state == up:
+                      string: {text: " {ipv4}", foreground: 31748fff}
+
+    # Bluetooth - same bluetoothctl commands as your swaybar script
+    - script:
+        path: /bin/sh
+        args:
+          - -c
+          - |
+            while :; do
+              names=""
+              if bluetoothctl show 2>/dev/null | grep -q "Powered: yes"; then
+                names=$(bluetoothctl devices Connected 2>/dev/null | sed -n 's/^Device [^ ]* //p' | tr '\n' ',' | sed 's/,$//; s/,/, /g')
+                if [ -n "$names" ]; then s=connected; else s=on; fi
+              else
+                s=off
+              fi
+              echo "bt|string|$s"
+              echo "names|string|${names:-none}"
+              echo
+              sleep 5
+            done
+        content:
+          map:
+            default: {empty: {}}
+            conditions:
+              bt == connected:
+                string: {text: " {names}", foreground: ebbcbaff}
+              bt == on:
+                string: {text: " on", foreground: ebbcbaff}
+              bt == off:
+                string: {text: " off", foreground: 6e6a86ff}
+
+    # RAM
+    - mem:
+        poll-interval: 2500
+        content:
+          string:
+            text: " {percent_used}%"
+            foreground: 9ccfd8ff
+
+    # Username
+    - script:
+        path: /bin/sh
+        args:
+          - -c
+          - 'echo "user|string|$(whoami)"; echo; while :; do sleep 3600; done'
+        content:
+          string:
+            text: "{user}"
+            foreground: 908caaff

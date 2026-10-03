@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openbox_menu>
+  <menu id="root-menu" label="">
+
+    <!-- Apps -->
+    <item label="www">
+      <action name="Execute"><command>firefox</command></action>
+    </item>
+    <item label="term">
+      <action name="Execute"><command>foot</command></action>
+    </item>
+    <item label="files">
+      <action name="Execute"><command>foot spf</command></action>
+    </item>
+    <separator />
+
+    <menu id="work-menu" label="work">
+
+      <item label="notes">
+        <action name="Execute"><command>flatpak run org.libreoffice.LibreOffice --calc</command></action>
+      </item>
+      <item label="teams">
+        <action name="Execute"><command>teams</command></action>
+      </item>
+      <item label="outlook">
+        <action name="Execute"><command>outlook</command></action>
+      </item>
+      <item label="anydesk">
+        <action name="Execute"><command>anydesk</command></action>
+      </item>
+    </menu>
+
+    <menu id="play-menu" label="play">
+
+      <item label="music">
+        <action name="Execute"><command>foot kew</command></action>
+      </item>
+      <item label="steam">
+        <action name="Execute"><command>steam</command></action>
+      </item>
+      <item label="disc">
+        <action name="Execute"><command>discord</command></action>
+      </item>
+      <item label="moode">
+        <action name="Execute"><command>moode</command></action>
+      </item>
+    </menu>
+
+    <separator />
+
+
+
+
+    <menu id="system-menu" label="system">
+      <item label="mixer">
+        <action name="Execute"><command>foot pipemixer</command></action>
+      </item>
+      <item label="bluetooth">
+        <action name="Execute"><command>foot bluetui</command></action>
+      </item>
+      <!-- Needs passwordless doas -->
+      <item label="network">
+        <action name="Execute"><command>foot doas /usr/sbin/setup-interfaces</command></action>
+      </item>
+      <item label="top">
+        <action name="Execute"><command>foot top</command></action>
+      </item>
+      <item label="disks">
+        <action name="Execute" command="sh -c 'foot pkexec env WAYLAND_DISPLAY=&quot;$WAYLAND_DISPLAY&quot; XDG_RUNTIME_DIR=&quot;$XDG_RUNTIME_DIR&quot; gparted'" />
+      </item>
+      <item label="display">
+        <action name="Execute"><command>wdisplays</command></action>
+      </item>
+    </menu>
+
+    <menu id="session-menu" label="session">
+      <item label="logout">
+        <action name="Execute"><command>pkill labwc</command></action>
+      </item>
+      <item label="sleep">
+        <action name="Execute"><command>foot doas /usr/sbin/zzz</command></action>
+      </item>
+      <item label="shutdown">
+        <action name="Execute"><command>foot doas /sbin/poweroff</command></action>
+      </item>
+      <separator/>
+      <item label="refresh">
+        <action name="Execute"><command>labwc --reconfigure</command></action>
+      </item>
+    </menu>
+
+  </menu>
+</openbox_menu>

@@ -1,0 +1,36 @@
+# --- Rosé Pine Color Palette Variables ---
+# Base:    #191724
+# Surface: #2a2837
+# Overlay: #26233a
+# Muted:   #6e6a86
+# Text:    #e0def4
+# Love:    #eb6f92
+# Gold:    #f6c177
+# Rose:    #ebbcba
+# Pine:    #31748f
+# Iris:    #c4a7e7
+
+# --- Window Borders ---
+window.active.border.color: #c4a7e7
+window.inactive.border.color: #26233a
+border.width: 7
+
+# --- OSD / Window Switcher (Outlines) ---
+osd.border.width: 1
+osd.border.color: #c4a7e7
+osd.bg.color: #191724
+osd.text.color: #e0def4
+osd.label.text.color: #e0def4
+
+# Alt-Tab preview outline around the selected window.
+# Three colors = outer,middle,inner lines (default is bg,text,bg, which looks grey).
+# Dark Base on the outside/inside makes the Iris line pop.
+osd.window-switcher.preview.border.width: 3
+osd.window-switcher.preview.border.color: #f6c177,#f6c177,#191724
+
+# --- Geometry & Menu Elements ---
+menu.items.bg.color: #191724
+menu.items.text.color: #e0def4
+menu.items.active.bg.color: #26233a
+menu.items.active.text.color: #eb6f92
+

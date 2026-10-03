@@ -1,0 +1,46 @@
+include "/usr/share/nano/*.nanorc"
+set linenumbers
+
+## Enable Traditional Keyboard Shortcuts (Ctrl+C, Ctrl+V, Ctrl+X, Ctrl+Z, etc.)
+set bindings
+
+## Rose Pine Theme for Nano (Universal Compatibility)
+## Maps Rose Pine hex colors to the closest standard nano names
+
+# Interface Elements
+set titlecolor black,magenta
+set statuscolor black,magenta
+set errorcolor white,red
+set selectedcolor black,white
+set numbercolor yellow
+set keycolor magenta
+set functioncolor cyan
+
+# Syntax Highlighting Rules
+syntax "rosepine" ".*"
+
+# Keywords (Iris / Rose -> Magenta)
+color magenta "\<(break|case|catch|continue|default|delete|do|else|finally|for|function|if|in|instanceof|new|return|switch|this|throw|try|typeof|var|void|while|with|class|export|import|extends|super|const|let|package|private|protected|public|static|yield|async|await)\>"
+
+# Types and Classes (Foam / Pine -> Cyan)
+color cyan "\<(Array|Boolean|Date|Function|Number|Object|RegExp|String|Symbol|Error|int|float|double|char|void)\>"
+
+# Strings (Gold -> Yellow)
+color yellow ""(\\.|[^"])*""
+color yellow "'(\\.|[^'])*'"
+
+# Numbers and Constants (Love -> Red)
+color red "\<[0-9]+(\.[0-9]+)?\>"
+color red "\<(true|false|null|undefined|NaN)\>"
+
+# Comments (Muted -> Blue/Bright Black)
+color blue "//.*"
+color blue "/\*色彩\*/"
+color blue "/*"
+#color blue "*/"
+color blue "#.*"
+
+# Operators and Brackets (Subtle -> White)
+#color white "[+*=/%\-!|&<>]"
+color white "[{}()\[\];.,]"
+

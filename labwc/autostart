@@ -1,0 +1,31 @@
+yambar &
+
+# Background depends on who is logged in
+if [ "$(id -un)" = "work" ]; then
+    swaybg -m fill -i ~/.config/work_bg.jpg &
+else
+    swaybg -m fill -i ~/.config/user_bg.jpg &
+fi
+
+#wlr-randr --output DP-2 --preferred --pos 0,0 --output HDMI-A-1 --preferred --pos 0,1080 &
+pipewire &
+wireplumber &
+pipewire-pulse &
+
+# Set monitor layout, then (work user only) launch the work apps.
+# The launch runs after the layout loop so windows land on the right monitors.
+#(for i in 1 2 3 4 5 6 7 8; do
+#   wlr-randr --output DP-2 --mode 1920x1080@60 --pos 0,0 --output HDMI-A-1 --mode 1920x1080@119.982 --pos 0,1080
+#   sleep 1
+#   wlr-randr | grep -A8 '^HDMI-A-1' | grep -q 'Position: 0,1080' && break
+# done
+
+# Apply layout at login, then (work user only) launch the work apps
+(~/.config/labwc/apply-monitors.sh
+ if [ "$(id -un)" = "work" ]; then
+     ~/.config/labwc/work-launch.sh
+ fi) &
+
+# Re-apply layout after sleep
+swayidle -w \
+    after-resume "$HOME/.config/labwc/apply-monitors.sh" &
